@@ -1,5 +1,4 @@
-<!-- START: AlatiphA Add-Ins FAQ Widget (Material UI + WhatsApp Style) -->
-<style>
+<!-- START: AlatiphA Add-Ins FAQ Widget (Material UI + WhatsApp Style) --><style>
   :root {
     --primary-color: #956433;
     --bg-chat: #f0f0f0;
@@ -120,21 +119,23 @@
     cursor: pointer;
     animation: pulse 2s infinite;
   }
+  #toggleFaqChat svg {
+    width: 20px;
+    height: 20px;
+  }
   @keyframes pulse {
     0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(149, 100, 51, 0.4); }
     70% { transform: scale(1.08); box-shadow: 0 0 0 12px rgba(149, 100, 51, 0); }
     100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(149, 100, 51, 0); }
   }
-</style>
-
-<div id="faqChatWidget">
+</style><div id="faqChatWidget">
   <div id="faqChatHeader">
     AlatiphA Add-Ins FAQs
-    <button id="faqCloseBtn">×</button>
+    <button id="faqCloseBtn">&times;</button>
   </div>
   <input type="text" id="faqSearchInput" placeholder="Search FAQs...">
   <div id="faqChatBody">
-    <div class="faq-answer">Hi there! Tap a topic below to begin </div>
+    <div class="faq-answer">Hi there! Tap a topic below to begin ðŸ‘‡</div>
   </div>
   <div class="faq-btns">
     <button data-topic="licensing">Licensing</button>
@@ -144,9 +145,11 @@
     <button data-topic="support">Support</button>
   </div>
 </div>
-<button id="toggleFaqChat"></button>
-
-<script>
+<button id="toggleFaqChat">
+  <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 3C6.48 3 2 6.94 2 11.5c0 2.29 1.07 4.36 2.83 5.92L4 21l3.67-1.17C9.29 20.47 10.62 21 12 21c5.52 0 10-3.94 10-8.5S17.52 3 12 3z"/>
+  </svg>
+</button><script>
   const faqs = {
     licensing: [
       { q: "Q1. Where is the add-in tab?", a: "You'll find it in Excel's ribbon named after the add-in (e.g., xCases)." },
@@ -156,50 +159,38 @@
       { q: "Q5. How to buy key?", a: "Click the Help & Subscribe menu in the add-in tab, then follow the prompt." }
     ],
     updates: [
-      { q: "Q6. Check for updates?", a: "Go to Help & Subscribe  Check for Update. Follow instructions." },
+      { q: "Q6. Check for updates?", a: "Go to Help & Subscribe â†’ Check for Update. Follow instructions." },
       { q: "Q7. How are updates validated?", a: "Downloaded from secure URL and verified via SHA256 hash." },
       { q: "Q8. Manual update?", a: "Yes. Replace old file manually if needed." }
     ],
     troubleshoot: [
       {
         q: "Q9. Add-in not working?",
-        a: `<b>Common Reasons Why an Excel Add-In May Not Work:</b><br><br>
-        <b>1. File/Installation Issues</b><br>
-        • File was moved, deleted, or not properly installed.<br>
-        • Wrong file type (not .xlam).<br><br>
-        <b>2. Excel Settings</b><br>
-        • Add-in not enabled or was disabled after a crash.<br>
-        • Macros disabled in Trust Center.<br>
-        • File is blocked (right-click  Properties  Unblock).<br><br>
-        <b>3. Permissions & Trust</b><br>
-        • Not in a trusted folder.<br>
-        • Blocked by antivirus, firewall, or admin policy.<br><br>
-        <b>4. Dependencies & Conflicts</b><br>
-        • Missing references or incompatible libraries.<br>
-        • Conflicts with other add-ins or wrong 32/64-bit declarations.<br><br>
-        <b>5. Code or Logic Errors</b><br>
-        • Startup code (Auto_Open, Workbook_Open, etc.) contains errors.<br>
-        • Ribbon UI or event handlers not correctly wired.<br><br>
-        <b>6. Environment Issues</b><br>
-        • Excel version too old.<br>
-        • User permissions or missing support files.<br><br>
-        <b>7. Policy Blocks</b><br>
-        • Group policy disables add-ins/macros.<br><br>
-        <b>What to Do:</b><br>
-        • Unblock the add-in file.<br>
-        • Move it into a trusted folder.<br>
-        • Enable macros in the Trust Center.`
+        a: `<b>Common Reasons Why an Excel Add-In May Not Work:</b><ul>
+              <li><b>File/Installation Issues:</b> File moved, deleted, or wrong file type (.xlam).</li>
+              <li><b>Excel Settings:</b> Add-in disabled after crash, macros blocked, or file not unblocked.</li>
+              <li><b>Permissions & Trust:</b> File not in trusted location or blocked by antivirus.</li>
+              <li><b>Dependencies:</b> Missing references or library issues.</li>
+              <li><b>Code Errors:</b> Event handlers or Ribbon UI not properly wired.</li>
+              <li><b>Environment Issues:</b> Incompatible Excel version or limited permissions.</li>
+              <li><b>Policy Blocks:</b> Group policy disables add-ins/macros.</li>
+            </ul>
+            <b>What to Do:</b><ul>
+              <li>Unblock the add-in file.</li>
+              <li>Put it in a trusted folder.</li>
+              <li>Enable macros in Trust Center.</li>
+            </ul>`
       }
     ],
     security: [
-      { q: "Q10. Is data safe?", a: "Yes. Your license keys are encrypted. No external access." }
+      { q: "Q10. Is data safe?", a: "Yes. License keys are encrypted and no external servers are involved." }
     ],
     support: [
       {
         q: "Q11. How do I get support?",
-        a: `•Blog: <span onclick="window.open('https://alatipha.blogspot.com/p/alatipha-add-ins-frequently-asked_12.html','_blank','noopener');" style="color: var(--primary-color); cursor: pointer;">More Support</span><br>
-            •Email: <span onclick="window.open('mailto:alatipha@ymail.com','_blank','noopener');" style="color: var(--primary-color); cursor: pointer;">alatipha@ymail.com</span><br>
-            •Phone: <span onclick="window.open('tel:+233243443688','_blank','noopener');" style="color: var(--primary-color); cursor: pointer;">+233 243 443 688</span>`
+        a: `â€¢Blog: <span onclick=\"window.open('https://alatipha.blogspot.com/p/alatipha-add-ins-frequently-asked_12.html','_blank')\" style=\"color: var(--primary-color); cursor: pointer;\">More Support</span><br>
+            â€¢Email: <span onclick=\"window.open('mailto:alatipha@ymail.com')\" style=\"color: var(--primary-color); cursor: pointer;\">alatipha@ymail.com</span><br>
+            â€¢Phone: <span onclick=\"window.open('tel:+233243443688')\" style=\"color: var(--primary-color); cursor: pointer;\">+233 243 443 688</span>`
       }
     ]
   };
@@ -249,5 +240,4 @@
       faqBody.appendChild(a);
     });
   }
-</script>
-<!-- END -->
+</script><!-- END -->
