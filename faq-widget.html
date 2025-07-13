@@ -1,4 +1,4 @@
-<!-- START: AlatiphA FAQ Widget -->
+<!-- START: AlatiphA Add-Ins FAQ Widget (Material UI + WhatsApp Style) -->
 <style>
   :root {
     --primary-color: #956433;
@@ -20,11 +20,6 @@
     flex-direction: column;
     font-family: 'Segoe UI', sans-serif;
     z-index: 9999;
-    pointer-events: auto;
-  }
-  #faqChatWidget.hidden {
-    display: none;
-    pointer-events: none;
   }
   @media (max-width: 500px) {
     #faqChatWidget {
@@ -124,7 +119,6 @@
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     animation: pulse 2s infinite;
-    pointer-events: auto;
   }
   @keyframes pulse {
     0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(149, 100, 51, 0.4); }
@@ -133,14 +127,14 @@
   }
 </style>
 
-<div id="faqChatWidget" class="hidden">
+<div id="faqChatWidget">
   <div id="faqChatHeader">
     AlatiphA Add-Ins FAQs
     <button id="faqCloseBtn">×</button>
   </div>
-  <input type="text" id="faqSearchInput" placeholder="Search FAQs...">
+  <input type="text" id="faqSearchInput" placeholder="Search FAQs..." />
   <div id="faqChatBody">
-    <div class="faq-answer">Hi there! Tap a topic below to begin 😊</div>
+    <div class="faq-answer">Hi there! Tap a topic below to begin 🗨️</div>
   </div>
   <div class="faq-btns">
     <button data-topic="licensing">Licensing</button>
@@ -150,7 +144,7 @@
     <button data-topic="support">Support</button>
   </div>
 </div>
-<button id="toggleFaqChat">💬</button>
+<button id="toggleFaqChat" aria-label="Open FAQ">🗨️</button>
 
 <script>
   const faqs = {
@@ -171,30 +165,30 @@
         q: "Q9. Add-in not working?",
         a: `<b>Common Reasons Why an Excel Add-In May Not Work:</b><br><br>
         <b>1. File/Installation Issues</b><br>
-        • File was moved, deleted, or not properly installed.<br>
-        • Wrong file type (not .xlam).<br><br>
+        🟤 File was moved, deleted, or not properly installed.<br>
+        🟤 Wrong file type (not .xlam).<br><br>
         <b>2. Excel Settings</b><br>
-        • Add-in not enabled or was disabled after a crash.<br>
-        • Macros disabled in Trust Center.<br>
-        • File is blocked (right-click → Properties → Unblock).<br><br>
+        🟤 Add-in not enabled or was disabled after a crash.<br>
+        🟤 Macros disabled in Trust Center.<br>
+        🟤 File is blocked (right-click → Properties → Unblock).<br><br>
         <b>3. Permissions & Trust</b><br>
-        • Not in a trusted folder.<br>
-        • Blocked by antivirus, firewall, or admin policy.<br><br>
+        🟤 Not in a trusted folder.<br>
+        🟤 Blocked by antivirus, firewall, or admin policy.<br><br>
         <b>4. Dependencies & Conflicts</b><br>
-        • Missing references or incompatible libraries.<br>
-        • Conflicts with other add-ins or wrong 32/64-bit declarations.<br><br>
+        🟤 Missing references or incompatible libraries.<br>
+        🟤 Conflicts with other add-ins or wrong 32/64-bit declarations.<br><br>
         <b>5. Code or Logic Errors</b><br>
-        • Startup code (Auto_Open, Workbook_Open, etc.) contains errors.<br>
-        • Ribbon UI or event handlers not correctly wired.<br><br>
+        🟤 Startup code (Auto_Open, Workbook_Open, etc.) contains errors.<br>
+        🟤 Ribbon UI or event handlers not correctly wired.<br><br>
         <b>6. Environment Issues</b><br>
-        • Excel version too old.<br>
-        • User permissions or missing support files.<br><br>
+        🟤 Excel version too old.<br>
+        🟤 User permissions or missing support files.<br><br>
         <b>7. Policy Blocks</b><br>
-        • Group policy disables add-ins/macros.<br><br>
+        🟤 Group policy disables add-ins/macros.<br><br>
         <b>What to Do:</b><br>
-        • Unblock the add-in file.<br>
-        • Move it into a trusted folder.<br>
-        • Enable macros in the Trust Center.`
+        🟤 Unblock the add-in file.<br>
+        🟤 Move it into a trusted folder.<br>
+        🟤 Enable macros in the Trust Center.`
       }
     ],
     security: [
@@ -203,9 +197,9 @@
     support: [
       {
         q: "Q11. How do I get support?",
-        a: `•Blog: <a href="https://alatipha.blogspot.com/p/alatipha-add-ins-frequently-asked_12.html" target="_blank" rel="noopener">More Support</a><br>
-            •Email: <a href="mailto:alatipha@ymail.com">alatipha@ymail.com</a><br>
-            •Phone: <a href="tel:+233243443688">+233 243 443 688</a>`
+        a: `🟤 Blog: <span onclick="window.open('https://alatipha.blogspot.com/p/alatipha-add-ins-frequently-asked_12.html','_blank','noopener');" style="color: var(--primary-color); cursor: pointer;">More Support</span><br>
+            🟤 Email: <span onclick="window.open('mailto:alatipha@ymail.com','_blank','noopener');" style="color: var(--primary-color); cursor: pointer;">alatipha@ymail.com</span><br>
+            🟤 Phone: <span onclick="window.open('tel:+233243443688','_blank','noopener');" style="color: var(--primary-color); cursor: pointer;">+233 243 443 688</span>`
       }
     ]
   };
@@ -219,14 +213,8 @@
 
   let currentTopic = [];
 
-  toggleBtn.onclick = () => {
-    chatBox.classList.remove("hidden");
-    chatBox.style.display = "flex";
-  };
-
-  closeBtn.onclick = () => {
-    chatBox.classList.add("hidden");
-  };
+  toggleBtn.onclick = () => chatBox.style.display = "flex";
+  closeBtn.onclick = () => chatBox.style.display = "none";
 
   topicBtns.forEach(btn => {
     btn.addEventListener("click", () => {
