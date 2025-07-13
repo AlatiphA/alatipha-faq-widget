@@ -1,0 +1,253 @@
+<!-- START: AlatiphA Add-Ins FAQ Widget (Material UI + WhatsApp Style) -->
+<style>
+  :root {
+    --primary-color: #956433;
+    --bg-chat: #f0f0f0;
+    --msg-in: #ffffff;
+    --msg-out: #d4b183;
+    --text-color: #333;
+  }
+  #faqChatWidget {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 95%;
+    max-width: 360px;
+    background: var(--bg-chat);
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    display: none;
+    flex-direction: column;
+    font-family: 'Segoe UI', sans-serif;
+    z-index: 9999;
+  }
+  @media (max-width: 500px) {
+    #faqChatWidget {
+      right: 10px;
+      bottom: 70px;
+      max-height: 88vh;
+    }
+  }
+  #faqChatHeader {
+    background: var(--primary-color);
+    color: white;
+    padding: 14px;
+    border-radius: 16px 16px 0 0;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  #faqChatHeader button {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  #faqSearchInput {
+    margin: 10px;
+    padding: 8px;
+    border: none;
+    border-radius: 20px;
+    width: calc(100% - 20px);
+    font-size: 14px;
+  }
+  #faqChatBody {
+    padding: 10px;
+    height: 270px;
+    overflow-y: auto;
+    font-size: 14px;
+    background: var(--bg-chat);
+    color: var(--text-color);
+  }
+  .faq-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 10px;
+    justify-content: center;
+  }
+  .faq-btns button {
+    flex: 1 1 40%;
+    font-size: 12px;
+    padding: 8px;
+    border: none;
+    border-radius: 12px;
+    background: var(--msg-out);
+    color: #4a2c0a;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .faq-btns button:hover {
+    background: #e7cda3;
+  }
+  .faq-question {
+    background: var(--msg-in);
+    border-radius: 12px 12px 0 12px;
+    padding: 8px 10px;
+    margin: 8px 0 0 auto;
+    max-width: 90%;
+    word-wrap: break-word;
+  }
+  .faq-answer {
+    background: var(--msg-out);
+    border-radius: 12px 12px 12px 0;
+    padding: 8px 10px;
+    margin: 2px auto 8px 0;
+    max-width: 90%;
+    word-wrap: break-word;
+    font-size: 13px;
+  }
+  #toggleFaqChat {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--primary-color);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9998;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(149, 100, 51, 0.4); }
+    70% { transform: scale(1.08); box-shadow: 0 0 0 12px rgba(149, 100, 51, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(149, 100, 51, 0); }
+  }
+</style>
+
+<div id="faqChatWidget">
+  <div id="faqChatHeader">
+    AlatiphA Add-Ins FAQs
+    <button id="faqCloseBtn">×</button>
+  </div>
+  <input type="text" id="faqSearchInput" placeholder="Search FAQs...">
+  <div id="faqChatBody">
+    <div class="faq-answer">Hi there! Tap a topic below to begin </div>
+  </div>
+  <div class="faq-btns">
+    <button data-topic="licensing">Licensing</button>
+    <button data-topic="updates">Updates</button>
+    <button data-topic="troubleshoot">Troubleshoot</button>
+    <button data-topic="security">Security</button>
+    <button data-topic="support">Support</button>
+  </div>
+</div>
+<button id="toggleFaqChat"></button>
+
+<script>
+  const faqs = {
+    licensing: [
+      { q: "Q1. Where is the add-in tab?", a: "You'll find it in Excel's ribbon named after the add-in (e.g., xCases)." },
+      { q: "Q2. First-time activation?", a: "Start a 7-day free trial after agreeing to the EULA by clicking the Trial button." },
+      { q: "Q3. Internet required?", a: "No. All activations work offline." },
+      { q: "Q4. Trial expired?", a: "You must purchase a valid subscription key to continue." },
+      { q: "Q5. How to buy key?", a: "Click the Help & Subscribe menu in the add-in tab, then follow the prompt." }
+    ],
+    updates: [
+      { q: "Q6. Check for updates?", a: "Go to Help & Subscribe  Check for Update. Follow instructions." },
+      { q: "Q7. How are updates validated?", a: "Downloaded from secure URL and verified via SHA256 hash." },
+      { q: "Q8. Manual update?", a: "Yes. Replace old file manually if needed." }
+    ],
+    troubleshoot: [
+      {
+        q: "Q9. Add-in not working?",
+        a: `<b>Common Reasons Why an Excel Add-In May Not Work:</b><br><br>
+        <b>1. File/Installation Issues</b><br>
+        • File was moved, deleted, or not properly installed.<br>
+        • Wrong file type (not .xlam).<br><br>
+        <b>2. Excel Settings</b><br>
+        • Add-in not enabled or was disabled after a crash.<br>
+        • Macros disabled in Trust Center.<br>
+        • File is blocked (right-click  Properties  Unblock).<br><br>
+        <b>3. Permissions & Trust</b><br>
+        • Not in a trusted folder.<br>
+        • Blocked by antivirus, firewall, or admin policy.<br><br>
+        <b>4. Dependencies & Conflicts</b><br>
+        • Missing references or incompatible libraries.<br>
+        • Conflicts with other add-ins or wrong 32/64-bit declarations.<br><br>
+        <b>5. Code or Logic Errors</b><br>
+        • Startup code (Auto_Open, Workbook_Open, etc.) contains errors.<br>
+        • Ribbon UI or event handlers not correctly wired.<br><br>
+        <b>6. Environment Issues</b><br>
+        • Excel version too old.<br>
+        • User permissions or missing support files.<br><br>
+        <b>7. Policy Blocks</b><br>
+        • Group policy disables add-ins/macros.<br><br>
+        <b>What to Do:</b><br>
+        • Unblock the add-in file.<br>
+        • Move it into a trusted folder.<br>
+        • Enable macros in the Trust Center.`
+      }
+    ],
+    security: [
+      { q: "Q10. Is data safe?", a: "Yes. Your license keys are encrypted. No external access." }
+    ],
+    support: [
+      {
+        q: "Q11. How do I get support?",
+        a: `•Blog: <span onclick="window.open('https://alatipha.blogspot.com/p/alatipha-add-ins-frequently-asked_12.html','_blank','noopener');" style="color: var(--primary-color); cursor: pointer;">More Support</span><br>
+            •Email: <span onclick="window.open('mailto:alatipha@ymail.com','_blank','noopener');" style="color: var(--primary-color); cursor: pointer;">alatipha@ymail.com</span><br>
+            •Phone: <span onclick="window.open('tel:+233243443688','_blank','noopener');" style="color: var(--primary-color); cursor: pointer;">+233 243 443 688</span>`
+      }
+    ]
+  };
+
+  const toggleBtn = document.getElementById("toggleFaqChat");
+  const chatBox = document.getElementById("faqChatWidget");
+  const closeBtn = document.getElementById("faqCloseBtn");
+  const faqBody = document.getElementById("faqChatBody");
+  const searchInput = document.getElementById("faqSearchInput");
+  const topicBtns = document.querySelectorAll(".faq-btns button");
+
+  let currentTopic = [];
+
+  toggleBtn.onclick = () => chatBox.style.display = "flex";
+  closeBtn.onclick = () => chatBox.style.display = "none";
+
+  topicBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const topic = btn.getAttribute("data-topic");
+      currentTopic = faqs[topic];
+      renderFaq(currentTopic);
+    });
+  });
+
+  searchInput.addEventListener("input", () => {
+    const val = searchInput.value.toLowerCase();
+    const filtered = currentTopic.filter(f => f.q.toLowerCase().includes(val) || f.a.toLowerCase().includes(val));
+    renderFaq(filtered);
+  });
+
+  function renderFaq(list) {
+    faqBody.innerHTML = "";
+    if (list.length === 0) {
+      faqBody.innerHTML = '<div class="faq-answer">No result found</div>';
+      return;
+    }
+    list.forEach(faq => {
+      const q = document.createElement("div");
+      q.className = "faq-question";
+      q.innerText = faq.q;
+
+      const a = document.createElement("div");
+      a.className = "faq-answer";
+      a.innerHTML = faq.a;
+
+      faqBody.appendChild(q);
+      faqBody.appendChild(a);
+    });
+  }
+</script>
+<!-- END -->
