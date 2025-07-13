@@ -36,10 +36,11 @@ Paste this inside your website's HTML:
 
 Replace your-username with your GitHub username.
 
-
 ---
 
-Option 2: Inject with JavaScript (Script loader)
+### Option 2: Inject with JavaScript (Script loader)
+
+Paste this inside your website's HTML:
 
 Paste this at the end of your page (e.g., Blogger, WordPress):
 
